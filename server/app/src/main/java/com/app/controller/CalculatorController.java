@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import com.app.Operation;
+import com.app.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CalculatorController {
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Double> calculate(@RequestBody Operation operation) {
-        return new ResponseEntity<>(operation.compute(), HttpStatus.OK);
+    public Result calculate(@RequestBody Operation operation) {
+        return operation.compute();
     }
 }

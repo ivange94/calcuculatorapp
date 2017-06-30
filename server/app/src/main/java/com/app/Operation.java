@@ -38,7 +38,7 @@ public class Operation {
         this.operand2 = operand2;
     }
 
-    public Double compute() {
+    public Result compute() {
         double result = 0;
         switch (operator) {
             case "+":
@@ -56,6 +56,6 @@ public class Operation {
             default:
                 throw new IllegalArgumentException("Unrecognized operator: " + operator);
         }
-        return result;
+        return new Result(result);
     }
 }

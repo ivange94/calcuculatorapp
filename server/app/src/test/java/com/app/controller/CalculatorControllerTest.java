@@ -68,7 +68,7 @@ public class CalculatorControllerTest {
             .contentType(contentType))
             .andExpect(status().isOk())
             .andExpect(content().contentType(contentType))
-            .andExpect(content().string(equalTo("6.0")));
+            .andExpect(content().string(equalTo("{\"value\":6.0}")));
     }
 
     protected String json(Object o) throws IOException {

@@ -27,30 +27,22 @@ public class OperationTest {
 
     @Test
     public void compute_shouldProperlyPerformAdditionOperation() throws Exception {
-        operation.setOperator("+");
-        double result = operation.compute();
-        assertThat(result, is(12.0));
+        testOperator("+", 12.0);
     }
 
     @Test
     public void compute_shouldProperlyPerformSubtractionOperation() throws Exception {
-        operation.setOperator("-");
-        double result = operation.compute();
-        assertThat(result, is(4.0));
+        testOperator("-", 4.0);
     }
 
     @Test
     public void compute_shouldProperlyPerformMultiplicationOperation() throws Exception {
-        operation.setOperator("*");
-        double result = operation.compute();
-        assertThat(result, is(32.0));
+        testOperator("*", 32.0);
     }
 
     @Test
     public void compute_shouldProperlyPerformDivisionOperation() throws Exception {
-        operation.setOperator("/");
-        double result = operation.compute();
-        assertThat(result, is(2.0));
+        testOperator("/", 2.0);
     }
 
     @Test
@@ -59,5 +51,12 @@ public class OperationTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Unrecognized operator: " + operation.getOperator());
         operation.compute();
+    }
+
+    private void testOperator(String operator, double result) {
+        operation.setOperator(operator);
+        Result expectedResult = new Result(result);
+        Result actualResult = operation.compute();
+        assertThat(actualResult, is(expectedResult));
     }
 }
