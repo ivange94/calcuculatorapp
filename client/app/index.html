@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Simple Calculator</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+      .container {
+        margin-top: 2%;
+      }
+
+      select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form class="form-inline" id="calculatorForm">
+        <div class="form-group">
+          <label class="sr-only" for="operand1">Email address</label>
+          <input type="number" class="form-control" id="operand1" placeholder="Value">
+        </div>
+        <div class="form-group">
+          <select class="form-control" id="operator">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="operand2">Password</label>
+          <input type="number" class="form-control" id="operand2" placeholder="Value">
+        </div>
+        <button type="button" id="resetButton" class="btn btn-default">Reset</button>
+        <button type="button" id="computeButton" class="btn btn-default">Compute</button>
+    </form>
+    <div class="result">
+    </div>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <scripT>
+      $(function() {
+        $('#resetButton').on('click', function(event) {
+          $('#calculatorForm').trigger('reset');
+        });
+
+        $('#computeButton').on('click', function(event) {
+          var operation = {};
+
+          operation.operator = $('#operator').val();
+          operation.operand1 = $('#operand1').val();
+          operation.operand2 = $('#operand2').val();
+
+          $.ajax({
+            url: 'http://localhost:8080/calculator',
+            method: 'GET',
+            data: operation,
+            contentType: 'application/json',
+          }).done(function() {
+            console.log('success');
+          }).fail(function() {
+            console.log("error");
+          })
+        });
+      });
+    </script>
+  </body>
+</html>
