@@ -16,6 +16,17 @@
         text-overflow: '';
       }
 
+      .result {
+        background-color: lightyellow;
+        border: 1px dashed darkred;
+        width: 20%
+      }
+
+      .error {
+        background-color: pink;
+        border: 1px dashed darkred;
+      }
+
     </style>
   </head>
   <body>
@@ -39,33 +50,54 @@
         </div>
         <button type="button" id="resetButton" class="btn btn-default">Reset</button>
         <button type="button" id="computeButton" class="btn btn-default">Compute</button>
-    </form>
+    </form><br>
     <div class="result">
     </div>
+    <div class="error">
     </div>
+    </div>
+
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <scripT>
       $(function() {
+        $('.result').hide();
+
+        $('.error').hide();
+
         $('#resetButton').on('click', function(event) {
           $('#calculatorForm').trigger('reset');
+          $('.result').hide();
+          $('.error').hide();
         });
 
         $('#computeButton').on('click', function(event) {
           var operation = {};
 
-          operation.operator = $('#operator').val();
-          operation.operand1 = $('#operand1').val();
-          operation.operand2 = $('#operand2').val();
+          const operator = $('#operator').val();
+          const operand1 = $('#operand1').val();
+          const operand2 = $('#operand2').val();
+
+          if (operand1 === "" || operand2 === "") {
+              $('.error').html('<p>Missing operands. You must provide both.</p>');
+              $('.error').show();
+              return;
+          }
+
+          operation.operator = operator;
+          operation.operand1 = operand1;
+          operation.operand2 = operand2;
 
           $.ajax({
             url: 'http://localhost:8080/calculator',
-            method: 'GET',
-            data: operation,
+            method: 'POST',
+            data: JSON.stringify(operation),
             contentType: 'application/json',
-          }).done(function() {
-            console.log('success');
-          }).fail(function() {
-            console.log("error");
+          }).done(function(data) {
+            $('.error').hide();
+            $('.result').html("Answer: " + data.value);
+            $('.result').show();
+          }).fail(function(error) {
+            console.log(error.responseText);
           })
         });
       });
