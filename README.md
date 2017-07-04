@@ -30,7 +30,7 @@ directory.
 
 ## Run client
 
-YOu can run the client on any server you wish. Just make sure you server is running on http://localhost:8080 because the client has been
+You can run the client on any server you wish. Just make sure you server is running on http://localhost:8080 because the client has been
 configured to connect to the server via that url. Also the server has been configured to allow cross origin request from any
 origin so it doesn't matter which port your client is running on, it'll still be able to access the server.
 
